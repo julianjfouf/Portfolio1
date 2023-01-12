@@ -19,7 +19,7 @@ function App() {
 
   const renderer = new THREE.WebGLRenderer({ antialias: true });
 
-  renderer.setPixelRatio(devicePixelRatio);
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 3));
 
   camera.position.set(0, 0, 250);
 
@@ -30,15 +30,16 @@ function App() {
     y: 0,
   };
 
+  const triangleGeometry = new THREE.ConeGeometry(20, 20, 4, 1);
+  const triangleMaterial = new THREE.MeshStandardMaterial({
+    color: 0x669dec,
+    metalness: 0,
+    roughness: 0,
+  });
+
+  console.time("triangles");
   for (let i = 0; i < 20; i++) {
-    const triangle = new THREE.Mesh(
-      new THREE.ConeGeometry(20, 20, 4, 1),
-      new THREE.MeshStandardMaterial({
-        color: 0x669dec,
-        metalness: 0,
-        roughness: 0,
-      })
-    );
+    const triangle = new THREE.Mesh(triangleGeometry, triangleMaterial);
 
     triangle.position.set(
       Math.random() * 1000 - 500,
@@ -50,6 +51,8 @@ function App() {
 
     scene.add(triangle);
   }
+
+  console.timeEnd("triangles");
 
   const light = new THREE.DirectionalLight(0xffffff, 1);
   light.position.set(0, 0, 500);
@@ -77,7 +80,7 @@ function App() {
 
     renderer.setSize(innerWidth, innerHeight);
 
-    renderer.setPixelRatio(devicePixelRatio);
+    renderer.setPixelRatio(Math.min(devicePixelRatio, 3));
 
     const trianglex = triangle.position.x;
     const triangley = triangle.position.y;
