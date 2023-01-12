@@ -37,7 +37,6 @@ function App() {
     roughness: 0,
   });
 
-  console.time("triangles");
   for (let i = 0; i < 20; i++) {
     const triangle = new THREE.Mesh(triangleGeometry, triangleMaterial);
 
@@ -51,8 +50,6 @@ function App() {
 
     scene.add(triangle);
   }
-
-  console.timeEnd("triangles");
 
   const light = new THREE.DirectionalLight(0xffffff, 1);
   light.position.set(0, 0, 500);
